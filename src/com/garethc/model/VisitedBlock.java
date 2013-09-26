@@ -13,11 +13,11 @@ import javax.swing.border.LineBorder;
  *
  * @author gconry
  */
-public class WallBlock extends JLabel{
+public class VisitedBlock extends JLabel{
     
-    public WallBlock() {
+    public VisitedBlock() {
         setOpaque(true);
-        setBackground(Color.red);
+        setBackground(Color.green);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }

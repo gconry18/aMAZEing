@@ -14,9 +14,8 @@ import javax.swing.border.LineBorder;
  * @author gconry
  */
 public class PathBlock extends JLabel{
-    private static PathBlock block;
     
-    private PathBlock() {
+    public PathBlock() {
         setOpaque(true);
         setBackground(Color.orange);
         setBorder(new LineBorder(Color.black));
@@ -25,12 +24,5 @@ public class PathBlock extends JLabel{
     
     public void scale(int size) {
         setSize(size,size);
-    }
-    
-    public static PathBlock getInstance() {
-        if (block == null) {
-            block = new PathBlock();
-        }
-        return block;
     }
 }

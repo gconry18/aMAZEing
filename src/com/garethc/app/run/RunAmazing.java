@@ -4,7 +4,6 @@
  */
 package com.garethc.app.run;
 
-import com.garethc.app.config.SizeGenerator;
 import com.garethc.presentation.GameWindow;
 
 /**
@@ -14,9 +13,5 @@ import com.garethc.presentation.GameWindow;
 public class RunAmazing {
     public static void main(String[] args) {
         GameWindow gw = new GameWindow();
-        
-        SizeGenerator size = new SizeGenerator();
-        System.out.println(size.getVertical());
-        System.out.println(size.getHorizontal());
     }
 }
