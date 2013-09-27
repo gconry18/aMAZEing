@@ -4,10 +4,8 @@
  */
 package com.garethc.presentation;
 
-import com.garethc.app.config.SizeGenerator;
-import com.garethc.model.Arrow;
+import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.PathBlock;
-import com.garethc.model.WallBlock;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,8 +35,17 @@ public class GameWindow extends JFrame implements ActionListener{
         
         JMenuItem menuItemGenerate = new JMenuItem("Generate");
         menuItemGenerate.addActionListener(this);
+        JMenuItem menuItemEasy = new JMenuItem("Easy");
+        menuItemGenerate.addActionListener(this);
+        JMenuItem menuItemMedium = new JMenuItem("Medium");
+        menuItemGenerate.addActionListener(this);
+        JMenuItem menuItemHard = new JMenuItem("Hard");
+        menuItemGenerate.addActionListener(this);
         JMenu menuGame = new JMenu("Game");
         menuGame.add(menuItemGenerate);
+        menuGame.add(menuItemEasy);
+        menuGame.add(menuItemMedium);
+        menuGame.add(menuItemHard);
         
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(menuFile);
