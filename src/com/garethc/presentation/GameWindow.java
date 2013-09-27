@@ -4,6 +4,10 @@
  */
 package com.garethc.presentation;
 
+import com.garethc.app.config.difficulty.DifficultyControl;
+import com.garethc.app.config.difficulty.EasyDifficulty;
+import com.garethc.app.config.difficulty.HardDifficulty;
+import com.garethc.app.config.difficulty.MediumDifficulty;
 import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.PathBlock;
 import java.awt.Color;
@@ -18,6 +22,7 @@ import javax.swing.border.LineBorder;
  */
 public class GameWindow extends JFrame implements ActionListener{
     private JPanel gridPanel;
+    DifficultyControl dc = new DifficultyControl();
 
     public GameWindow() {
         super();
@@ -98,5 +103,24 @@ public class GameWindow extends JFrame implements ActionListener{
             }
             this.repaint();
         }
+        
+        else if (cmd.equals("Easy")) {
+            dc.setStrategy(new EasyDifficulty());
+            dc.populateGrid();
+        }
+        
+        else if (cmd.equals("Medium")) {
+            dc.setStrategy(new MediumDifficulty());
+            dc.populateGrid();            
+        }
+        
+        else if (cmd.equals("Hard")) {
+            dc.setStrategy(new HardDifficulty());
+            dc.populateGrid();            
+        }
+    }
+    
+    private void paintGrid() {
+        
     }
 }

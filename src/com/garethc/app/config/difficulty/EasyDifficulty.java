@@ -4,6 +4,9 @@
  */
 package com.garethc.app.config.difficulty;
 
+import com.garethc.app.config.size.SizeGenerator;
+import com.garethc.model.Grid;
+
 /**
  *
  * @author gconry
@@ -12,7 +15,10 @@ public class EasyDifficulty implements Difficulty {
 
     @Override
     public void populateGrid() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SizeGenerator sg = new SizeGenerator();
+        sg.generateSize();
+        
+        Grid grid = Grid.getInstance();
     }
     
 }
