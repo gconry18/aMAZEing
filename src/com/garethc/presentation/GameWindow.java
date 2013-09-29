@@ -4,6 +4,7 @@
  */
 package com.garethc.presentation;
 
+import com.garethc.movement.MovementHandler;
 import com.garethc.app.config.difficulty.DifficultyControl;
 import com.garethc.app.config.difficulty.EasyDifficulty;
 import com.garethc.app.config.difficulty.HardDifficulty;
@@ -12,6 +13,8 @@ import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.PathBlock;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 
 /**
@@ -63,10 +66,36 @@ public class GameWindow extends JFrame implements ActionListener{
         textMovement = new JTextField();
         textMovement.setLocation(20, 20);
         textMovement.setSize(300, 20);
+        textMovement.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char key = e.getKeyChar();
+                key = Character.toUpperCase(key);
+                //System.out.println(key);
+                if (key != 'F') {
+                    if (key != 'L') {
+                        if (key != 'R') {
+                            if (!(key>='0' && key<='9')) {
+                                e.consume();
+                            }
+                        }
+                    }
+                }                            
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         
         buttonMove = new JButton("Move!");
         buttonMove.setLocation(340, 10);
         buttonMove.setSize(100, 40);
+        buttonMove.addActionListener(this);
         
         
         gridPanel = new JPanel();
@@ -132,6 +161,11 @@ public class GameWindow extends JFrame implements ActionListener{
             dc.setStrategy(new HardDifficulty());
             gridArray = dc.populateGrid();
             paintGrid();            
+        }
+        
+        else if (cmd.equals("Move!")) {
+            System.out.println("Begin Move: ");
+            MovementHandler.handleMovement(textMovement.getText());
         }
     }
     
