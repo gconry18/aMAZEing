@@ -10,11 +10,9 @@ import com.garethc.app.config.difficulty.HardDifficulty;
 import com.garethc.app.config.difficulty.MediumDifficulty;
 import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.PathBlock;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 /**
  *
@@ -24,11 +22,13 @@ public class GameWindow extends JFrame implements ActionListener{
     private JPanel gridPanel;
     private JLabel [] [] gridArray;
     DifficultyControl dc = new DifficultyControl();
+    private JTextField textMovement;
+    private JButton buttonMove;
 
     public GameWindow() {
         super();
         setTitle("aMAZEing Game");
-        setSize(1000, 1000);
+        setSize(560, 650);
         setLayout(null);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,15 +60,26 @@ public class GameWindow extends JFrame implements ActionListener{
         setJMenuBar(menuBar);
         //--
         
+        textMovement = new JTextField();
+        textMovement.setLocation(20, 20);
+        textMovement.setSize(300, 20);
+        
+        buttonMove = new JButton("Move!");
+        buttonMove.setLocation(340, 10);
+        buttonMove.setSize(100, 40);
+        
+        
         gridPanel = new JPanel();
-        gridPanel.setSize(700,500);
-        gridPanel.setLocation(20, 20); 
-        gridPanel.setBorder(new LineBorder(Color.black));       
+        gridPanel.setSize(500,500);
+        gridPanel.setLocation(20, 60); 
+        //gridPanel.setBorder(new LineBorder(Color.black));       
         
 //        Arrow arrow = Arrow.getInstance();
 //        arrow.setLocation(0, 0);
 //        arrow.scale(20);
         
+        add(textMovement);
+        add(buttonMove);
         add(gridPanel);
         setVisible(true);
     }
@@ -85,7 +96,7 @@ public class GameWindow extends JFrame implements ActionListener{
             gridPanel.removeAll();
             SizeGenerator sgen = new SizeGenerator();
             // Decide on scale
-            int scale = 700 / sgen.getHorizontal();
+            int scale = 500 / sgen.getHorizontal();
             gridPanel.setSize(scale*sgen.getHorizontal(),scale*sgen.getVertical());
             int x = 0;
             int y = 0;
@@ -131,7 +142,7 @@ public class GameWindow extends JFrame implements ActionListener{
         
         System.out.println("x: " + x + " y: " + y);
         
-        int scale = 700 / x;
+        int scale = 500 / x;
         
         System.out.println("scale: " + scale);
         

@@ -21,6 +21,8 @@ public class FinishBlock extends JLabel{
     private FinishBlock() {
         image = new ImageIcon("src/images/finish.png");
         setIcon(image);
+        setHorizontalAlignment(JLabel.CENTER);
+        setVerticalAlignment(JLabel.CENTER);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }

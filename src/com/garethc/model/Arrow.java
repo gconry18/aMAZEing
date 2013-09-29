@@ -19,8 +19,12 @@ public class Arrow extends JLabel{
     private static Arrow arrow;
     
     private Arrow() {
+        setOpaque(true);
+        setBackground(Color.green);
         image = new ImageIcon("src/images/arrow_icon.png");
         setIcon(image);
+        setHorizontalAlignment(JLabel.CENTER);
+        setVerticalAlignment(JLabel.CENTER);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }
