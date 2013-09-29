@@ -4,6 +4,8 @@
  */
 package com.garethc.app.config.difficulty;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author gconry
@@ -15,7 +17,7 @@ public class DifficultyControl {
         this.strategy = strategy;
     }
     
-    public void populateGrid(){
-        strategy.populateGrid();
+    public JLabel [] [] populateGrid(){
+        return strategy.populateGrid();
     }
 }

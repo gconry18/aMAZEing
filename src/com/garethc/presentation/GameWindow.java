@@ -22,12 +22,13 @@ import javax.swing.border.LineBorder;
  */
 public class GameWindow extends JFrame implements ActionListener{
     private JPanel gridPanel;
+    private JLabel [] [] gridArray;
     DifficultyControl dc = new DifficultyControl();
 
     public GameWindow() {
         super();
         setTitle("aMAZEing Game");
-        setSize(800, 700);
+        setSize(1000, 1000);
         setLayout(null);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,11 +42,11 @@ public class GameWindow extends JFrame implements ActionListener{
         JMenuItem menuItemGenerate = new JMenuItem("Generate");
         menuItemGenerate.addActionListener(this);
         JMenuItem menuItemEasy = new JMenuItem("Easy");
-        menuItemGenerate.addActionListener(this);
+        menuItemEasy.addActionListener(this);
         JMenuItem menuItemMedium = new JMenuItem("Medium");
-        menuItemGenerate.addActionListener(this);
+        menuItemMedium.addActionListener(this);
         JMenuItem menuItemHard = new JMenuItem("Hard");
-        menuItemGenerate.addActionListener(this);
+        menuItemHard.addActionListener(this);
         JMenu menuGame = new JMenu("Game");
         menuGame.add(menuItemGenerate);
         menuGame.add(menuItemEasy);
@@ -106,21 +107,50 @@ public class GameWindow extends JFrame implements ActionListener{
         
         else if (cmd.equals("Easy")) {
             dc.setStrategy(new EasyDifficulty());
-            dc.populateGrid();
+            gridArray = dc.populateGrid();
+            paintGrid();
         }
         
         else if (cmd.equals("Medium")) {
             dc.setStrategy(new MediumDifficulty());
-            dc.populateGrid();            
+            gridArray = dc.populateGrid();   
+            paintGrid();         
         }
         
         else if (cmd.equals("Hard")) {
             dc.setStrategy(new HardDifficulty());
-            dc.populateGrid();            
+            gridArray = dc.populateGrid();
+            paintGrid();            
         }
     }
     
     private void paintGrid() {
+        gridPanel.removeAll();
+        int x = gridArray[0].length;
+        int y = gridArray.length;
         
+        System.out.println("x: " + x + " y: " + y);
+        
+        int scale = 700 / x;
+        
+        System.out.println("scale: " + scale);
+        
+        gridPanel.setSize(scale*x,scale*y);
+        int posx = 0;
+        int posy = 0;
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                //System.out.println(gridArray[i][j]);
+                JLabel block = gridArray[i][j];
+                block.setSize(scale,scale);
+                block.setLocation(posx, posy);                
+                gridPanel.add(block);
+                
+                posx += scale;
+            }
+            posx = 0;
+            posy += scale;
+        }
+        this.repaint();
     }
 }

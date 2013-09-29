@@ -6,6 +6,7 @@ package com.garethc.app.config.difficulty;
 
 import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.Grid;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,11 +15,16 @@ import com.garethc.model.Grid;
 public class EasyDifficulty implements Difficulty {
 
     @Override
-    public void populateGrid() {
+    public JLabel [] [] populateGrid() {
+        System.out.println("Strategy: Easy");
+        
         SizeGenerator sg = new SizeGenerator();
         sg.generateSize();
         
         Grid grid = Grid.getInstance();
+        grid.generateGrid(sg.getHorizontal(), sg.getVertical(), 8);
+        
+        return grid.getGrid();
     }
     
 }

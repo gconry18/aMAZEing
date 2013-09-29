@@ -19,7 +19,7 @@ public class FinishBlock extends JLabel{
     private static FinishBlock finishBlock;
     
     private FinishBlock() {
-        image = new ImageIcon("src/images/arrow_icon.png");
+        image = new ImageIcon("src/images/finish.png");
         setIcon(image);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));

@@ -11,6 +11,9 @@ package com.garethc.app.config.size;
 public class SizeGenerator {
     private int vertical;
     private int horizontal;
+    
+    private final int MIN = 10;
+    private final int MAX = 30;
 
     public SizeGenerator() {
         this.generateSize();
@@ -30,7 +33,7 @@ public class SizeGenerator {
         double h = 0;
         horizontal = (int) (h*100);
         
-        while ((horizontal < 10 || horizontal > 50) || vertical % 2 != 0 ) {
+        while ((horizontal < MIN || horizontal > MAX) || vertical % 2 != 0 ) {
             h = Math.random();
             horizontal = (int) (h*100);        
         }
@@ -40,7 +43,7 @@ public class SizeGenerator {
         double v = 0;
         vertical = (int) (v*100);
         
-        while ((vertical < 10 || vertical > 50) 
+        while ((vertical < MIN || vertical > MAX) 
                 || (vertical % 2 != 0) 
                 || vertical > horizontal) {
             v = Math.random();

@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 public class Grid {
     private static Grid gridInstance;
     private JLabel grid [] [];
+    private int walls;
+    private int paths;
     
     private Grid() {        
     }
@@ -25,32 +27,46 @@ public class Grid {
     }
     
     private void setGridSize(int x, int y) {
-        grid = new JLabel[x][y];
+        grid = new JLabel[y][x];
     }
     
-    public void generateGrid (int x, int y) {
+    public void generateGrid (int x, int y, int difficulty) {
         setGridSize(x, y);
         
         FinishBlock finish = FinishBlock.getInstance();
         Arrow arrow = Arrow.getInstance();
         
-        int scale = 700 / x;
-        int posx = 0;
-        int posy = 0;
-        for (int j = 0; j < x; j++)
+        walls = 0;
+        paths = 0;
+        for (int i = 0; i < y; i++)
         {
-            for (int i = 0; i < y; i++)
+            for (int j = 0; j < x; j++)
             {
-                PathBlock pb = new PathBlock();
-                pb.setLocation(x, y);
-                posx = posx + scale;
-                pb.scale(scale);
+                if (i == 0 && j == 0) continue;
+                if (i == y-1 && j == x-1) continue;
+                
+                int random = (int) (Math.random() * 100);
+                if (random % difficulty == 0) {
+                    WallBlock wb = new WallBlock();
+                    grid [i] [j] = wb;
+                    walls++;
+                }
+                else {
+                    PathBlock pb = new PathBlock();
+                    grid [i] [j] = pb;
+                    paths++;
+                }
             }
-            posx = 0;
-            posy = posy + scale;
         }
         
         grid [0] [0] = finish;
-        grid [x-1] [y-1] = arrow;
+        grid [y-1] [x-1] = arrow;
+        
+        double ratio = (double)paths / (double)walls;
+        System.out.println("Paths: " + paths + "\nWalls: " + walls + "\nRatio: " + ratio);
+    }
+    
+    public JLabel[][] getGrid() {
+        return grid;        
     }
 }
