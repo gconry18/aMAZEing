@@ -25,6 +25,22 @@ public class MovementHandler {
         System.out.println(command);
         
         String [] commandArray = command.split("#");
+        
+        for (int i = 0; i < commandArray.length; i++) {
+            if (commandArray[i].charAt(0) == 'F') {
+                move(commandArray[i]);
+            }
+            else {
+                rotate(commandArray[i]);
+            }
+        }
     }
     
+    private static void rotate (String command) {
+        System.out.println("Rotating: " + command);
+    }
+    
+    private static void move (String command) {
+        System.out.println("Moving: " + command);
+    }
 }
