@@ -39,7 +39,8 @@ public class MovementHandler {
             if (commandArray[i].charAt(0) == 'F') {
                 win = move(commandArray[i]);
             }
-            else {
+            else if (commandArray[i].charAt(0) == 'R' 
+                    || commandArray[i].charAt(0) == 'L'){
                 rotate(commandArray[i]);
             }
         }

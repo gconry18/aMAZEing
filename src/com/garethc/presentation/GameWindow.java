@@ -31,13 +31,14 @@ public class GameWindow extends JFrame implements ActionListener {
     private static JLabel [] [] gridArray;
     DifficultyControl dc = new DifficultyControl();
     private JTextField textMovement;
+    private JLabel labelCommand;
     private JButton buttonMove;
     private static Container container;
 
     public GameWindow() {
         super();
         setTitle("aMAZEing Game");
-        setSize(560, 650);
+        setSize(550, 650);
         setLayout(null);
         setResizable(false);
         
@@ -73,16 +74,17 @@ public class GameWindow extends JFrame implements ActionListener {
         //--
         
         textMovement = new JTextField();
-        textMovement.setLocation(20, 20);
-        textMovement.setSize(300, 20);
+        textMovement.setLocation(20, 10);
+        textMovement.setSize(400, 20);
         textMovement.setEnabled(false);
         textMovement.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char key = e.getKeyChar();
                 key = Character.toUpperCase(key);
-                //System.out.println(key);
-                if (key != 'F') {
+                System.out.println(key);
+                if (key == '\n') buttonMove.doClick();
+                else if (key != 'F') {
                     if (key != 'L') {
                         if (key != 'R') {
                             if (!(key>='0' && key<='9')) {
@@ -102,22 +104,25 @@ public class GameWindow extends JFrame implements ActionListener {
             }
         });
         
+        labelCommand = new JLabel();
+        labelCommand.setText("<html>L(n) (Rotate Left) R(n) (Rotate Right) F(n) (Move Forward)"
+                                + "<br>(n) is any whole number</html>");
+        labelCommand.setLocation(20, 30);
+        labelCommand.setSize(400, 40);
+        
         buttonMove = new JButton("Move!");
-        buttonMove.setLocation(340, 10);
+        buttonMove.setLocation(440, 10);
         buttonMove.setSize(100, 40);
         buttonMove.addActionListener(this);
         
         
         gridPanel = new JPanel();
         gridPanel.setSize(500,500);
-        gridPanel.setLocation(20, 60); 
+        gridPanel.setLocation(20, 80); 
         //gridPanel.setBorder(new LineBorder(Color.black));       
-        
-//        Arrow arrow = Arrow.getInstance();
-//        arrow.setLocation(0, 0);
-//        arrow.scale(20);
-        
+                
         add(textMovement);
+        add(labelCommand);
         add(buttonMove);
         add(gridPanel);
         setVisible(true);

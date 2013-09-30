@@ -38,7 +38,7 @@ public class Arrow extends JLabel{
     
     private Arrow() throws IOException {
         setOpaque(true);
-        setBackground(Color.yellow);
+        setBackground(new Color(97, 212, 85));
         
         bi = ImageIO.read(new File("src/images/arrow_icon.png"));
         
@@ -67,8 +67,8 @@ public class Arrow extends JLabel{
         else if (orientation == ARROW_WEST) rotation = Math.PI / -2;
         else if (orientation == ARROW_NORTHWEST) rotation = Math.PI / -4;
         
-        g2.rotate(rotation, bi.getWidth() / 2, bi.getHeight() / 2);
-        g2.drawImage(bi, 0, 0, null);
+        g2.rotate(rotation, (double)arrow.getSize().width / 2, (double)arrow.getSize().height / 2);
+        g2.drawImage(bi, 0, 0, arrow.getSize().width, arrow.getSize().height, null);
     }
     
     public void scale(int size) {

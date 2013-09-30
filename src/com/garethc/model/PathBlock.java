@@ -17,7 +17,7 @@ public class PathBlock extends JLabel{
     
     public PathBlock() {
         setOpaque(true);
-        setBackground(Color.ORANGE);
+        setBackground(new Color(85, 148, 212));
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }

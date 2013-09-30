@@ -17,7 +17,7 @@ public class WallBlock extends JLabel{
     
     public WallBlock() {
         setOpaque(true);
-        setBackground(Color.gray);
+        setBackground(Color.darkGray);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }
