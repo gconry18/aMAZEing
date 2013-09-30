@@ -16,7 +16,7 @@ import com.garethc.presentation.GameWindow;
  */
 public class MovementHandler {
 
-    public static void handleMovement(String command) throws Exception {
+    public static boolean handleMovement(String command) throws Exception {
         System.out.println(command);
         
         command = command.toUpperCase();
@@ -33,14 +33,17 @@ public class MovementHandler {
         
         String [] commandArray = command.split("#");
         
-        for (int i = 0; i < commandArray.length; i++) {
+        boolean win = false;
+        
+        for (int i = 0; i < commandArray.length && win == false; i++) {
             if (commandArray[i].charAt(0) == 'F') {
-                move(commandArray[i]);
+                win = move(commandArray[i]);
             }
             else {
                 rotate(commandArray[i]);
             }
         }
+        return win;
     }
     
     private static void rotate (String command) throws Exception {
@@ -54,20 +57,22 @@ public class MovementHandler {
             if (direction == 'L') arrow.rotateArrowLeft();
             else arrow.rotateArrowRight();
             System.out.println(arrow.getOrientation());
-            Thread.sleep(500);
             GameWindow.paintGrid();
+            Thread.sleep(250);
         }
     }
     
-    private static void move (String command) throws WallMoveException, BoundryMoveException, InterruptedException {
+    private static boolean move (String command) throws WallMoveException, BoundryMoveException, InterruptedException {
         System.out.println("Moving: " + command);
+        boolean win = false;
         
         Grid grid = Grid.getInstance();
         int moves = Integer.parseInt(command.substring(1));
-        for (int i = 0; i < moves; i++) {
-            grid.doMove();
-            Thread.sleep(500);
+        for (int i = 0; i < moves && win == false; i++) {
+            win = grid.doMove();
             GameWindow.paintGrid();
+            Thread.sleep(250);
         }
+        return win;
     }
 }

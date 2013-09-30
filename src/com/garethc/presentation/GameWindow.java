@@ -11,9 +11,10 @@ import com.garethc.app.config.difficulty.HardDifficulty;
 import com.garethc.app.config.difficulty.MediumDifficulty;
 import com.garethc.app.config.exceptions.BoundryMoveException;
 import com.garethc.app.config.exceptions.WallMoveException;
-import com.garethc.app.config.size.SizeGenerator;
-import com.garethc.model.PathBlock;
+import com.garethc.model.Grid;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -39,6 +40,10 @@ public class GameWindow extends JFrame implements ActionListener {
         setSize(560, 650);
         setLayout(null);
         setResizable(false);
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation(dim.width/2-560/2, dim.height/2-650/2);
+                
         container = getContentPane();
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,16 +54,13 @@ public class GameWindow extends JFrame implements ActionListener {
         JMenu menuFile = new JMenu("File");
         menuFile.add(menuItemExit);
         
-        JMenuItem menuItemGenerate = new JMenuItem("Generate");
-        menuItemGenerate.addActionListener(this);
         JMenuItem menuItemEasy = new JMenuItem("Easy");
         menuItemEasy.addActionListener(this);
         JMenuItem menuItemMedium = new JMenuItem("Medium");
         menuItemMedium.addActionListener(this);
         JMenuItem menuItemHard = new JMenuItem("Hard");
         menuItemHard.addActionListener(this);
-        JMenu menuGame = new JMenu("Game");
-        menuGame.add(menuItemGenerate);
+        JMenu menuGame = new JMenu("New Game");
         menuGame.add(menuItemEasy);
         menuGame.add(menuItemMedium);
         menuGame.add(menuItemHard);
@@ -73,6 +75,7 @@ public class GameWindow extends JFrame implements ActionListener {
         textMovement = new JTextField();
         textMovement.setLocation(20, 20);
         textMovement.setSize(300, 20);
+        textMovement.setEnabled(false);
         textMovement.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -87,7 +90,7 @@ public class GameWindow extends JFrame implements ActionListener {
                             }
                         }
                     }
-                }                            
+                }
             }
 
             @Override
@@ -128,34 +131,11 @@ public class GameWindow extends JFrame implements ActionListener {
             System.exit(0);
         }
         
-        else if (cmd.equals("Generate")) {
-            gridPanel.removeAll();
-            SizeGenerator sgen = new SizeGenerator();
-            // Decide on scale
-            int scale = 500 / sgen.getHorizontal();
-            gridPanel.setSize(scale*sgen.getHorizontal(),scale*sgen.getVertical());
-            int x = 0;
-            int y = 0;
-            for (int j = 0; j < sgen.getVertical(); j++)
-            {
-                for (int i = 0; i < sgen.getHorizontal(); i++)
-                {
-                    PathBlock pb = new PathBlock();
-                    pb.setLocation(x, y);
-                    x=x+scale;
-                    pb.scale(scale);
-                    gridPanel.add(pb);
-                }
-                x = 0;
-                y = y + scale;
-            }
-            this.repaint();
-        }
-        
         else if (cmd.equals("Easy")) {
             dc.setStrategy(new EasyDifficulty());
             try {
                 gridArray = dc.populateGrid();
+                textMovement.setEnabled(true);
             } catch (Exception ex) {
                 System.out.println("Unknown Error: " + ex);   
             }
@@ -166,6 +146,7 @@ public class GameWindow extends JFrame implements ActionListener {
             dc.setStrategy(new MediumDifficulty());
             try {   
                 gridArray = dc.populateGrid();
+                textMovement.setEnabled(true);
             } catch (Exception ex) {
                 System.out.println("Unknown Error: " + ex);   
             }
@@ -176,6 +157,7 @@ public class GameWindow extends JFrame implements ActionListener {
             dc.setStrategy(new HardDifficulty());
             try {
                 gridArray = dc.populateGrid();
+                textMovement.setEnabled(true);
             } catch (Exception ex) {
                 System.out.println("Unknown Error: " + ex);   
             }
@@ -185,19 +167,33 @@ public class GameWindow extends JFrame implements ActionListener {
         else if (cmd.equals("Move!")) {
             System.out.println("Begin Move: ");
             try {
-                MovementHandler.handleMovement(textMovement.getText());
+                if (textMovement.getText().length() > 0) {
+                    if(MovementHandler.handleMovement(textMovement.getText())) {
+                       JOptionPane.showMessageDialog(container, "You WIN ! ! !");
+                       textMovement.setEnabled(false);
+                    }
+                }
             } 
             catch (WallMoveException ex) {
-                JOptionPane.showMessageDialog(null, "You Crashed into a Wall!");
+                JOptionPane.showMessageDialog(container, "You Crashed into a Wall!");
+                Grid grid = Grid.getInstance();
+                grid.resetGrid();
+                paintGrid();
             }
             catch (BoundryMoveException ex) {
-                JOptionPane.showMessageDialog(null, "You Crashed into the Boundry!");
+                JOptionPane.showMessageDialog(container, "You Crashed into the Boundry!");
+                Grid grid = Grid.getInstance();
+                grid.resetGrid();
+                paintGrid();
             }
             catch (IOException ex) {
                 System.out.println("IO Error: " + ex);
             } 
             catch (Exception ex) {
                 System.out.println("Unknown Error: " + ex);                
+            }
+            finally {
+                textMovement.setText("");
             }
             //repaint();
         }
@@ -219,7 +215,6 @@ public class GameWindow extends JFrame implements ActionListener {
         int posy = 0;
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                //System.out.println(gridArray[i][j]);
                 JLabel block = gridArray[i][j];
                 block.setSize(scale,scale);
                 block.setLocation(posx, posy);                

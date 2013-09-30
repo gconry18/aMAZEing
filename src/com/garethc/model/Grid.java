@@ -99,13 +99,14 @@ public class Grid {
                 }
             }
         }
+        grid [arrow_y] [arrow_x] = new PathBlock();
         grid [blocks_y - 1] [blocks_x - 1] = arrow;
         arrow_x = blocks_x - 1;
         arrow_y = blocks_y - 1;
         arrow.setOrientation(Arrow.ARROW_NORTH);
     }
 
-    public void doMove() throws WallMoveException, BoundryMoveException {
+    public boolean doMove() throws WallMoveException, BoundryMoveException {
         int orientation = arrow.getOrientation();       
         if (orientation == ARROW_NORTH) {
             canMove(arrow_x, arrow_y - 1);
@@ -152,6 +153,9 @@ public class Grid {
             arrow_x = arrow_x - 1;
         }
         grid [arrow_y] [arrow_x] = arrow;
+        
+        if (arrow_x == 0 && arrow_y == 0) return true;
+        else return false;
     }
     
     private void canMove(int x, int y) throws WallMoveException, BoundryMoveException {
