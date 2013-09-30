@@ -17,7 +17,7 @@ public class VisitedBlock extends JLabel{
     
     public VisitedBlock() {
         setOpaque(true);
-        setBackground(Color.green);
+        setBackground(Color.yellow);
         setBorder(new LineBorder(Color.black));
         setMinimumSize(new Dimension(16, 16));
     }

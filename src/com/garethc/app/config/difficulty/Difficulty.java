@@ -12,5 +12,5 @@ import javax.swing.JLabel;
  * @author gconry
  */
 public interface Difficulty {
-    public JLabel [] [] populateGrid();
+    public JLabel [] [] populateGrid() throws Exception;
 }

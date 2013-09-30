@@ -9,30 +9,37 @@ import com.garethc.app.config.difficulty.DifficultyControl;
 import com.garethc.app.config.difficulty.EasyDifficulty;
 import com.garethc.app.config.difficulty.HardDifficulty;
 import com.garethc.app.config.difficulty.MediumDifficulty;
+import com.garethc.app.config.exceptions.BoundryMoveException;
+import com.garethc.app.config.exceptions.WallMoveException;
 import com.garethc.app.config.size.SizeGenerator;
 import com.garethc.model.PathBlock;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import javax.swing.*;
 
 /**
  *
  * @author gconry
  */
-public class GameWindow extends JFrame implements ActionListener{
-    private JPanel gridPanel;
-    private JLabel [] [] gridArray;
+public class GameWindow extends JFrame implements ActionListener {
+    private static JPanel gridPanel;
+    private static JLabel [] [] gridArray;
     DifficultyControl dc = new DifficultyControl();
     private JTextField textMovement;
     private JButton buttonMove;
+    private static Container container;
 
     public GameWindow() {
         super();
         setTitle("aMAZEing Game");
         setSize(560, 650);
         setLayout(null);
+        setResizable(false);
+        container = getContentPane();
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -147,29 +154,56 @@ public class GameWindow extends JFrame implements ActionListener{
         
         else if (cmd.equals("Easy")) {
             dc.setStrategy(new EasyDifficulty());
-            gridArray = dc.populateGrid();
+            try {
+                gridArray = dc.populateGrid();
+            } catch (Exception ex) {
+                System.out.println("Unknown Error: " + ex);   
+            }
             paintGrid();
         }
         
         else if (cmd.equals("Medium")) {
             dc.setStrategy(new MediumDifficulty());
-            gridArray = dc.populateGrid();   
+            try {   
+                gridArray = dc.populateGrid();
+            } catch (Exception ex) {
+                System.out.println("Unknown Error: " + ex);   
+            }
             paintGrid();         
         }
         
         else if (cmd.equals("Hard")) {
             dc.setStrategy(new HardDifficulty());
-            gridArray = dc.populateGrid();
+            try {
+                gridArray = dc.populateGrid();
+            } catch (Exception ex) {
+                System.out.println("Unknown Error: " + ex);   
+            }
             paintGrid();            
         }
         
         else if (cmd.equals("Move!")) {
             System.out.println("Begin Move: ");
-            MovementHandler.handleMovement(textMovement.getText());
+            try {
+                MovementHandler.handleMovement(textMovement.getText());
+            } 
+            catch (WallMoveException ex) {
+                JOptionPane.showMessageDialog(null, "You Crashed into a Wall!");
+            }
+            catch (BoundryMoveException ex) {
+                JOptionPane.showMessageDialog(null, "You Crashed into the Boundry!");
+            }
+            catch (IOException ex) {
+                System.out.println("IO Error: " + ex);
+            } 
+            catch (Exception ex) {
+                System.out.println("Unknown Error: " + ex);                
+            }
+            //repaint();
         }
     }
     
-    private void paintGrid() {
+    public static void paintGrid() {
         gridPanel.removeAll();
         int x = gridArray[0].length;
         int y = gridArray.length;
@@ -196,6 +230,6 @@ public class GameWindow extends JFrame implements ActionListener{
             posx = 0;
             posy += scale;
         }
-        this.repaint();
+        container.update(container.getGraphics());
     }
 }

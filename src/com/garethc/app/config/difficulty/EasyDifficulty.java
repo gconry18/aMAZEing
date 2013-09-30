@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 public class EasyDifficulty implements Difficulty {
 
     @Override
-    public JLabel [] [] populateGrid() {
+    public JLabel [] [] populateGrid() throws Exception {
         System.out.println("Strategy: Easy");
         
         SizeGenerator sg = new SizeGenerator();

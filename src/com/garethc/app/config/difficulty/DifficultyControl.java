@@ -17,7 +17,7 @@ public class DifficultyControl {
         this.strategy = strategy;
     }
     
-    public JLabel [] [] populateGrid(){
+    public JLabel [] [] populateGrid() throws Exception{
         return strategy.populateGrid();
     }
 }
