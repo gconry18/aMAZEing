@@ -47,7 +47,7 @@ public class MovementHandler {
     }
     
     private static void rotate (String command) throws Exception {
-        System.out.println("Rotating: " + command);
+        System.out.println("Rotate: " + command);
         Arrow arrow = Arrow.getInstance();
         
         char direction = command.charAt(0);
