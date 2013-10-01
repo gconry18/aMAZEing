@@ -19,10 +19,10 @@ public class SizeGenerator {
         this.generateSize();
     }
 
-    public SizeGenerator(int vertical, int horizontal) {
-        this.vertical = vertical;
-        this.horizontal = horizontal;
-    }    
+//    public SizeGenerator(int vertical, int horizontal) {
+//        this.vertical = vertical;
+//        this.horizontal = horizontal;
+//    }    
     
     public void generateSize() {
         generateHorizontalSize();
