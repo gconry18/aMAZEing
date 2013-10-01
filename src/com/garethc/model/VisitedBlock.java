@@ -22,7 +22,7 @@ public class VisitedBlock extends JLabel{
         setMinimumSize(new Dimension(16, 16));
     }
     
-    public void scale(int size) {
-        setSize(size,size);
-    }
+//    public void scale(int size) {
+//        setSize(size,size);
+//    }
 }

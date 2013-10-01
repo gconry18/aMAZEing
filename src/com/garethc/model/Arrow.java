@@ -21,7 +21,7 @@ import javax.swing.border.LineBorder;
  * @author gconry
  */
 public class Arrow extends JLabel{
-    private ImageIcon image;
+    //private ImageIcon image;
     private BufferedImage bi;
     private static Arrow arrow;
     
@@ -71,9 +71,9 @@ public class Arrow extends JLabel{
         g2.drawImage(bi, 0, 0, arrow.getSize().width, arrow.getSize().height, null);
     }
     
-    public void scale(int size) {
-        setSize(size,size);
-    }
+//    public void scale(int size) {
+//        setSize(size,size);
+//    }
     
     public static Arrow getInstance() throws IOException {
         if (arrow == null) {

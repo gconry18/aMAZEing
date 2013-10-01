@@ -27,9 +27,9 @@ public class FinishBlock extends JLabel{
         setMinimumSize(new Dimension(16, 16));
     }
     
-    public void scale(int size) {
-        setSize(size,size);
-    }
+//    public void scale(int size) {
+//        setSize(size,size);
+//    }
     
     public static FinishBlock getInstance() {
         if (finishBlock == null) {
