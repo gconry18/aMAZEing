@@ -105,7 +105,7 @@ public class GameWindow extends JFrame implements ActionListener {
         });
         
         labelCommand = new JLabel();
-        labelCommand.setText("<html>L(n) (Rotate Left) R(n) (Rotate Right) F(n) (Move Forward)"
+        labelCommand.setText("<html>L(n) (Rotate Left) | R(n) (Rotate Right) | F(n) (Move Forward)"
                                 + "<br>(n) is any whole number</html>");
         labelCommand.setLocation(20, 30);
         labelCommand.setSize(400, 40);
